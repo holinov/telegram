@@ -4,7 +4,8 @@ import mill.scalalib.publish._
 import mill.scalajslib._
 import ammonite.ops._
 
-val ScalaVersions = Seq("2.12.10")
+val JsScalaVersions = Seq("2.12.10")
+val ScalaVersions = Seq("2.12.10","2.13.1")
 
 object library {
 
@@ -29,8 +30,8 @@ object library {
     val akkaHttpCors       = "0.4.0"
     val hammock            = "0.9.1"
     val monix              = "3.1.0"
-    val scalaJs            = "0.6.28"
-    val scalaJsNodeFetch   = "0.4.2"
+    val scalaJs            = "1.0.1"
+    val scalaJsNodeFetch   = "0.5.0"
   }
 
   val akkaHttp           = ivy"com.typesafe.akka::akka-http::${Version.akkaHttp}"
@@ -149,7 +150,7 @@ object core extends Module {
 
   }
 
-  object js extends Cross[CoreJsModule](ScalaVersions: _ *)
+  object js extends Cross[CoreJsModule](JsScalaVersions: _ *)
 
   class CoreJsModule(val crossScalaVersion: String) extends Bot4sTelegramCore("js")
     with ScalaJSModule with Publishable {
@@ -211,7 +212,7 @@ object examples extends Module {
     )
   }
 
-  object js extends Cross[ExamplesJsModule](ScalaVersions: _ *)
+  object js extends Cross[ExamplesJsModule](JsScalaVersions: _ *)
 
   class ExamplesJsModule(val crossScalaVersion: String) extends Bot4sTelegramExamples("js") with ScalaJSModule {
     override def moduleDeps = super.moduleDeps ++ Seq(core.js())

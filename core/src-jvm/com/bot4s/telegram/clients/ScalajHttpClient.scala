@@ -88,7 +88,7 @@ class ScalajHttpClient(token: String, proxy: Proxy = Proxy.NO_PROXY, telegramHos
 
         val params = fields.getOrElse(Map())
 
-        Http(url).params(params ++ fileIdsParams).postMulti(parts: _*)
+        Http(url).params((params ++ fileIdsParams).toSeq).postMulti(parts: _*)
     }
 
     import marshalling.responseDecoder
